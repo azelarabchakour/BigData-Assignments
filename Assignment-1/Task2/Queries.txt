@@ -1,0 +1,42 @@
+#This query is the first part of the first question where we select the three tables: user, order and product, and get
+the users and their products and then collect each user products in a list using collect function so we can slice it after to show just the first 5 products for each user.
+#--------------------------------------------------------------------------------------------
+MATCH (u:User)-[:PLACED]->(o:Order)-[:CONTAINS]->(p:Product)
+WITH u, collect(p.product_name)[0..5] AS top_products
+RETURN u.name AS username, top_products
+#--------------------------------------------------------------------------------------------
+
+#This query is the second part of the first question where now we have to filter the products to only get the ones in the 'Electronics' category
+so now we have to also join the category table and do the same thing as the first part of the query except now we will order the products by their name.
+#--------------------------------------------------------------------------------------------
+MATCH (u:User)-[:PLACED]->(o:Order)-[:CONTAINS]->(p:Product)-[:BELONGS_TO]->(c:Category {name: "Electronics"})
+WITH u ,p ORDER BY p.product_name
+WITH u, collect(p.product_name)[0..5] AS top_5_products
+RETURN u.name AS username, top_5_products
+#--------------------------------------------------------------------------------------------
+
+#This query is for the second question where we select the useres and the products they have purchased and then use the count function to count how many are they
+and order the result form the highest to the lowest using ORDER BY and DESC
+#--------------------------------------------------------------------------------------------
+MATCH (u:User)-[:PURCHASED]->(p:Product)
+RETURN u.user_id, COUNT(p) AS number_of_orders 
+ORDER BY number_of_orders DESC
+#--------------------------------------------------------------------------------------------
+
+#This query is for the third question where we need the users and their reviews, those reviews contain rating of products
+so we join the three tables user, review and product and order the result by the rating from the highest to the lowest.
+#--------------------------------------------------------------------------------------------
+MATCH (u:User)-[:WROTE]->(r:Review)-[:REVIEWS]->(p:Product)
+RETURN u.name, r.rating, p.product_name
+ORDER BY r.rating DESC
+#--------------------------------------------------------------------------------------------
+
+#This query is for the last question, we first get all the users and the products they have purchased and then we exclude from it the products they just putted in the wishlist
+using WHERE NOT EXISTS, after that we count the products that were left to only return useres with more than 4 products and combine those product names in a list using collect so we can show them in the result as requested.
+#--------------------------------------------------------------------------------------------
+MATCH (u:User)-[:ADDED_TO_WISHLIST]->(p:Product)
+WHERE NOT EXISTS {(u)-[:PURCHASED]->(p)}
+WITH u.name as username, COUNT(p.product_name) as couted_products, COLLECT(p.product_name)  as wishlisted_but_never_purchased
+WHERE couted_products > 4
+RETURN username, wishlisted_but_never_purchased
+#--------------------------------------------------------------------------------------------

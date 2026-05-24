@@ -1,0 +1,164 @@
+
+  the story of big data from bytes to breakthroughs
+
+
+chapter  the birth of a digital universe
+
+
+in  tim bernerslee sent a groundbreaking proposal to his supervisors at cern
+the subject line read information management a proposal nobody knew it then but
+that single document  shared via email at   would ignite an explosion
+of data unlike anything humanity had ever seen visit 
+to read the original proposal within just  years the world wide web had connected
+over  people by  internet users were generating more than  exabytes
+of data every single day
+
+chapter  the three vs  and then some
+
+
+doug laney an analyst at meta group now gartner first described big data using
+ defining characteristics in 
+
+   volume    the sheer size of data think petabytes zettabytes
+   velocity  the speed at which data is generated eg  tweetsminute
+   variety   the types of data structured semistructured and unstructured
+
+later researchers at ibm added a th v veracity  the trustworthiness of data
+dr kirk borne  expanded this to  vs by  for the full list
+see 
+
+chapter  hadoop  the elephant that changed everything
+
+
+in  doug cutting and mike cafarella released apache hadoop  named after dougs
+sons toy elephant  under the apache software foundation hadoop allowed companies
+to store and process massive datasets across clusters of s of commodity servers
+
+   yahoo ran hadoop on  nodes by 
+   facebook stored  petabytes of data using hadoop by 
+   contribute or learn more at  or email 
+
+the release of hadoop  on november   was a watershed moment suddenly
+organizations with budgets under  could process terabytes of data overnight
+that was revolutionary
+
+chapter  google and the mapreduce revolution
+
+
+before hadoop google engineers jeffrey dean and sanjay ghemawat published a landmark
+paper titled mapreduce simplified data processing on large clusters in 
+download it here 
+
+the core idea divide a problem into small chunks map process them in parallel
+then combine the results reduce using this approach google indexed 
+web pages  over  billion  in under  hours questions reach their research team
+at research
+
+chapter  the data economy  numbers dont lie
+
+
+by  the global big data market was valued at  usd analysts
+at idc  projected it would reach  by  
+a compound annual growth rate of approximately  here are some staggering stats
+
+   google processes  billion searches per day
+   amazon web services aws stores data for  businesses worldwide
+   facebook meta analyzes  tb of data every  hours
+   the nyse generates  tb of trade data daily  see 
+   iot devices will generate  zettabytes of data annually by 
+
+chapter  realworld heroes of big data
+
+
+healthcare the human genome project  completed in april  after  years and
+ in funding  produced  billion base pairs of genetic data today
+sequencing a single genome costs less than  and takes under  hours contact
+the nih genomics team at  or visit 
+
+sports the oakland athletics famously profiled in moneyball used statistical
+analysis sabermetrics to compete with teams having x their payroll by 
+all  mlb teams employed fulltime data science departments for sports analytics
+resources visit  or email 
+
+climate nasas earth observing system generates over  terabytes of climate data
+daily this data powers  of the worlds climate models access the raw data at
+  or subscribe to updates at 
+
+chapter  the dark side  privacy  ethics
+
+
+not everything about big data is triumphant in march  it emerged that cambridge
+analytica harvested the personal data of  facebook users without their
+consent the scandal triggered gdpr general data protection regulation which took
+effect on may   carrying fines of up to  or  of global turnover
+
+the eus data protection authority can be reached at  or
+ meanwhile the california consumer privacy act ccpa
+went into force on january    giving  californians new rights
+over their personal data privacy is not optional it is a fundamental right
+
+chapter  ai  big data  the perfect storm
+
+
+big data and artificial intelligence are inseparable without big data modern ai
+would be impossible consider
+
+   gpt was trained on approximately  tokens of text data
+   imagenet  the dataset that sparked the deep learning revolution  contains
+     images across  categories see 
+   alphafold deepmind predicted structures for  proteins using
+    decades of biological data read the paper 
+   for ai  big data research subscribe at 
+
+dr andrew ng famously said ai is the new electricity but big data thats the
+power grid  without it the lights simply dont come on
+
+chapter  the tools that built the data world
+
+
+the big data ecosystem exploded between  key milestones
+
+    apache cassandra opensourced by facebook
+    apache spark released at uc berkeley visit 
+    apache kafka created at linkedin now processes  messagesday
+    amazon s hits  objects stored
+    tensorflow  released by google 
+    snowflake ipo raises   the largest software ipo in history
+    databricks reaches a  valuation info at 
+
+each tool solved a specific bottleneck together they created the modern data stack
+
+chapter  the future  what comes next
+
+
+by  the world will generate  zettabytes of data annually  a number so large
+it defies imagination heres whats coming
+
+   quantum data processing ibms qubit condor chip announced nov 
+     promises to solve data problems in seconds that would take classical computers
+      years more at  or 
+
+   edge computing instead of sending data to centralized clouds processing will
+     happen ondevice  in your car your watch even your fridge latency drops from
+     ms to under ms explore the standard at 
+
+   data sovereignty nations are asserting control indias dpdp act  brazils
+     lgpd and chinas pipl all reflect a world where data is power  and governments
+     intend to regulate that power contact the iapp at  for more
+
+conclusion data is the new soil
+
+
+big data didnt just change technology  it changed civilization every search query
+every heartbeat monitored by a wearable every financial transaction every satellite
+image adds to a living breathing record of human existence the challenge of our era
+is not collecting data  we do that effortlessly  but understanding it responsibly
+
+as the pioneers of this field knew from the very beginning with great data comes
+great responsibility
+
+
+for further reading visit 
+submit questions to 
+dataset compiled   total entries  chapters  word count  words
+

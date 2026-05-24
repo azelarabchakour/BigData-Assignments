@@ -1,0 +1,164 @@
+
+  THE STORY OF BIG DATA FROM BYTES TO BREAKTHROUGHS
+
+
+CHAPTER 1 THE BIRTH OF A DIGITAL UNIVERSE
+
+
+In 1989 Tim BernersLee sent a groundbreaking proposal to his supervisors at CERN
+The subject line read Information Management A Proposal Nobody knew it then but
+that single document  shared via email at infocernch  would ignite an explosion
+of data unlike anything humanity had ever seen Visit httpshomecernchsciencecomputingbirthweb
+to read the original proposal Within just 10 years the World Wide Web had connected
+over 300000000 people By 2005 internet users were generating MORE than 2 EXABYTES
+of data every single day
+
+CHAPTER 2 THE THREE Vs  AND THEN SOME
+
+
+Doug Laney an analyst at META Group now Gartner first described Big Data using
+3 defining characteristics in 2001
+
+  1 VOLUME    The sheer SIZE of data think petabytes zettabytes
+  2 VELOCITY  The SPEED at which data is generated eg 500000 tweetsminute
+  3 VARIETY   The TYPES of data structured semistructured and unstructured
+
+Later researchers at IBM added a 4th V VERACITY  the trustworthiness of data
+Dr Kirk Borne kbornegmuedu expanded this to 10 Vs by 2017 For the full list
+see httpswwwdatasciencecentralcomthevofbigdata
+
+CHAPTER 3 HADOOP  THE ELEPHANT THAT CHANGED EVERYTHING
+
+
+In 2006 Doug Cutting and Mike Cafarella released Apache Hadoop  named after Dougs
+sons toy elephant  under the Apache Software Foundation Hadoop allowed companies
+to store and process MASSIVE datasets across clusters of 1000s of commodity servers
+
+   Yahoo ran Hadoop on 42000 nodes by 2011
+   Facebook stored 100 PETABYTES of data using Hadoop by 2012
+   Contribute or learn more at httpshadoopapacheorg or email devhadoopapacheorg
+
+The release of Hadoop 10 on November 16 2011 was a watershed moment Suddenly
+organizations with budgets under 500000 could process TERABYTES of data overnight
+THAT was revolutionary
+
+CHAPTER 4 GOOGLE AND THE MAPREDUCE REVOLUTION
+
+
+Before Hadoop Google engineers Jeffrey Dean and Sanjay Ghemawat published a landmark
+paper titled MapReduce Simplified Data Processing on Large Clusters in 2004
+Download it here httpsresearchgooglecomarchivemapreduceosdi04pdf
+
+The core idea DIVIDE a problem into small chunks MAP process them in PARALLEL
+then COMBINE the results REDUCE Using this approach Google indexed 8058044651
+web pages  over 8 BILLION  in under 10 hours Questions Reach their research team
+at researchpapersgooglecom
+
+CHAPTER 5 THE DATA ECONOMY  NUMBERS DONT LIE
+
+
+By 2023 the global Big Data market was valued at 220000000000 USD Analysts
+at IDC idc_bigdataidccom projected it would reach 655000000000 by 2029 
+a compound annual growth rate of approximately 135 Here are some staggering stats
+
+   Google processes 85 BILLION searches per day
+   Amazon Web Services AWS stores data for 1000000 businesses worldwide
+   Facebook Meta analyzes 100 TB of data EVERY 24 HOURS
+   The NYSE generates 1 TB of trade data daily  see httpswwwnysecomdata
+   IoT devices will generate 731 ZETTABYTES of data annually by 2025
+
+CHAPTER 6 REALWORLD HEROES OF BIG DATA
+
+
+HEALTHCARE The Human Genome Project  completed in April 2003 after 13 YEARS and
+2700000000 in funding  produced 32 BILLION base pairs of genetic data Today
+sequencing a single genome costs less than 200 and takes under 24 HOURS Contact
+the NIH Genomics team at genomicsnihgov or visit httpswwwgenomegov
+
+SPORTS The Oakland Athletics famously profiled in Moneyball used statistical
+analysis Sabermetrics to compete with teams having 3X their payroll By 2022
+ALL 30 MLB teams employed fulltime data science departments For sports analytics
+resources visit httpssabrorg or email analyticsmlbamcom
+
+CLIMATE NASAs Earth Observing System generates over 10 TERABYTES of climate data
+DAILY This data powers 97 of the worlds climate models Access the raw data at
+httpsearthdatanasagov  or subscribe to updates at earthobservatorynasagov
+
+CHAPTER 7 THE DARK SIDE  PRIVACY  ETHICS
+
+
+NOT everything about Big Data is triumphant In March 2018 it emerged that Cambridge
+Analytica harvested the personal data of 87000000 Facebook users WITHOUT their
+consent The scandal triggered GDPR General Data Protection Regulation which took
+effect on May 25 2018 carrying fines of up to 20000000 or 4 of global turnover
+
+The EUs data protection authority can be reached at httpsedpbeuropaeu or
+contactedpbeuropaeu Meanwhile the California Consumer Privacy Act CCPA
+went into force on January 1 2020  giving 39000000 Californians new rights
+over their personal data PRIVACY IS NOT OPTIONAL IT IS A FUNDAMENTAL RIGHT
+
+CHAPTER 8 AI  BIG DATA  THE PERFECT STORM
+
+
+Big Data and Artificial Intelligence are INSEPARABLE Without Big Data modern AI
+would be IMPOSSIBLE Consider
+
+   GPT4 was trained on approximately 1000000000000 tokens of text data
+   ImageNet  the dataset that sparked the deep learning revolution  contains
+    14197122 images across 21841 categories see httpswwwimagenetorg
+   AlphaFold2 DeepMind predicted structures for 200000000 proteins using
+    decades of biological data Read the paper httpsdoiorg101038s41586021038192
+   For AI  Big Data research subscribe at researchdeepmindcom
+
+Dr Andrew Ng famously said AI is the new electricity But BIG DATA Thats the
+power grid  without it the lights simply DONT come on
+
+CHAPTER 9 THE TOOLS THAT BUILT THE DATA WORLD
+
+
+The Big Data ecosystem exploded between 20082020 Key milestones
+
+  2008  Apache Cassandra opensourced by Facebook
+  2010  Apache Spark released at UC Berkeley visit httpssparkapacheorg
+  2012  Apache Kafka created at LinkedIn now processes 7000000000000 messagesday
+  2014  Amazon S3 hits 2000000000000 objects stored
+  2016  TensorFlow 10 released by Google httpswwwtensorfloworg
+  2019  Snowflake IPO raises 3400000000  the LARGEST software IPO in history
+  2023  Databricks reaches a 43000000000 valuation info at infodatabrickscom
+
+Each tool solved a SPECIFIC bottleneck Together they created the modern data stack
+
+CHAPTER 10 THE FUTURE  WHAT COMES NEXT
+
+
+By 2030 the world will generate 612 ZETTABYTES of data annually  a number so large
+it defies imagination Heres whats coming
+
+   QUANTUM DATA PROCESSING IBMs 1000qubit Condor chip announced Nov 2023
+     promises to solve data problems in SECONDS that would take classical computers
+     10000 YEARS More at httpswwwibmcomquantum or quantumusibmcom
+
+   EDGE COMPUTING Instead of sending data to centralized clouds processing will
+     happen ONDEVICE  in your car your watch even your FRIDGE Latency drops from
+     100ms to under 1ms Explore the standard at httpswwwetsiorgedgecomputing
+
+   DATA SOVEREIGNTY Nations are asserting control Indias DPDP Act 2023 Brazils
+     LGPD and Chinas PIPL all reflect a world where DATA IS POWER  and governments
+     intend to REGULATE that power Contact the IAPP at publicationsiapporg for more
+
+CONCLUSION DATA IS THE NEW SOIL
+
+
+Big Data didnt just change technology  it changed CIVILIZATION Every search query
+every heartbeat monitored by a wearable every financial transaction every satellite
+image adds to a living breathing record of human existence The challenge of our era
+is not COLLECTING data  we do that effortlessly  but UNDERSTANDING it responsibly
+
+As the pioneers of this field knew from the very beginning with great data comes
+GREAT RESPONSIBILITY
+
+
+For further reading visit httpswwwbigdataframeworkorg
+Submit questions to editorialbigdatachroniclescom
+Dataset compiled 2024  Total entries 10 Chapters  Word Count 850 words
+
