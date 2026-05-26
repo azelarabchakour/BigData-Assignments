@@ -14,7 +14,6 @@ def task1a():
     even_rdd = rdd.filter(lambda x: x % 2 == 0) 
     result = even_rdd.take(7) 
     print(result)
-    sc.stop()
 #----------------------------------------------------------------
 
 
@@ -35,7 +34,6 @@ def task1b():
     final_buckets.sort(key=lambda x: int(x[0].split('-')[0]))
     for result in final_buckets:
         print(result)
-    sc.stop()
 #----------------------------------------------------------------
 
 
@@ -62,23 +60,43 @@ def task1d():
 
     def clean_word(word):
         cleaned = ''.join(char for char in word if char.isprintable() and char.isalpha())
-        return cleaned.lower()
+        return cleaned.lower().strip()
 
     words_list = rdd.flatMap(lambda line: line.split()).map(clean_word).filter(lambda word: len(word) > 0)
     word_counts = words_list.map(lambda word : (word,1)).reduceByKey(lambda a, b: a + b)
     top_25_words = word_counts.takeOrdered(25, key=lambda x: -x[1])
     for result in top_25_words:
         print(result)
+    return word_counts
 #----------------------------------------------------------------
 
 
 #--------------------- Task 1(e)---------------------------------
-
+def task1e(word_counts):
+    # stop_words = {
+    #     "the", "and", "of", "to", "a", "in", "that", "is", "was", "for", 
+    #     "it", "with", "as", "by", "on", "be", "this", "are", "from", "or",
+    #     "not", "at", "but", "an", "had", "which", "he", "his", "they", "we",
+    #     "you", "their", "were", "all", "one", "can", "would", "could", "may"
+    # }     
+    stop_words = set(StopWordsRemover.loadDefaultStopWords("english"))  
+    meaningful_words = word_counts.filter(lambda x: x[0] not in stop_words)
+    ordered_meaningful_words = meaningful_words.sortBy(lambda x: x[1], ascending=False)
+    final_meaningful_words = ordered_meaningful_words.take(30)
+    for result in final_meaningful_words:
+        print(result)
 #----------------------------------------------------------------
 
 
 #------------------ Execution -----------------------------------
-#task1a()
-#task1b()
-#task1d()
+print("----------------------------- TASK a ----------------------\n")
+task1a()
+print("----------------------------- TASK b ----------------------\n")
+task1b()
+print("----------------------------- TASK d ----------------------\n")
+word_list = task1d()
+print("----------------------------- TASK e ----------------------\n")
+task1e(word_list)
+
+sc.stop()
 #----------------------------------------------------------------
