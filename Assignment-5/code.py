@@ -1,8 +1,22 @@
 from neo4j import GraphDatabase
 import requests
 
-# URI = "neo4j://127.0.0.1:7687"
-# AUTH = ("neo4j", "amnqU4LveHgvhCQ6FYQu")
+URI = "neo4j://127.0.0.1:7687"
+AUTH = ("neo4j", "amnqU4LveHgvhCQ6FYQu")
+BASE_URL = "https://swapi.info/api/"
+ENDPOINTS = ["films", "people", "planets", "species", "vehicles", "starships"]
+
+def fetch_all_data():
+    """Fetches all JSON payloads from the 6 SWAPI endpoints."""
+    db_data = {}
+    for endpoint in ENDPOINTS:
+        response = requests.get(f"{BASE_URL}{endpoint}")
+        response.raise_for_status()
+        # swapi.info returns the full list directly, no pagination needed
+        db_data[endpoint] = response.json() 
+    return db_data
+
+
 
 # with GraphDatabase.driver(URI, auth=AUTH) as driver:
 #     driver.verify_connectivity()
@@ -28,31 +42,34 @@ import requests
 
 
 
-def fetch_data():
-    # 1. Define the API endpoint URL (using a sample public API)
-    url = "https://swapi.info/api/films/1"
+# def fetch_data():
+#     # 1. Define the API endpoint URL (using a sample public API)
+#     url = "https://swapi.info/api/films/1"
 
-    try:
-        # 2. Make a GET request to the API
-        response = requests.get(url)
+#     try:
+#         # 2. Make a GET request to the API
+#         response = requests.get(url)
         
-        # 3. Raise an exception if the request failed (e.g., 404 or 500 error)
-        response.raise_for_status()
+#         # 3. Raise an exception if the request failed (e.g., 404 or 500 error)
+#         response.raise_for_status()
         
-        # 4. Parse the JSON response into a Python dictionary
-        data = response.json()
+#         # 4. Parse the JSON response into a Python dictionary
+#         data = response.json()
         
-        # 5. Display the data
-        print("--- API Response ---")
-        print(f"User ID: {data.get('title')}")
-        print(f"Title: {data.get('episode_id')}")
-        print(f"Completed: {data.get('opening_crawl')}")
+#         # 5. Display the data
+#         print("--- API Response ---")
+#         print(f"User ID: {data.get('title')}")
+#         print(f"Title: {data.get('episode_id')}")
+#         print(f"Completed: {data.get('opening_crawl')}")
         
-        print("\n--- Full Raw Data ---")
-        print(data)
+#         print("\n--- Full Raw Data ---")
+#         print(data)
 
-    except requests.exceptions.RequestException as e:
-        print(f"An error occurred: {e}")
+#     except requests.exceptions.RequestException as e:
+#         print(f"An error occurred: {e}")
 
 if __name__ == "__main__":
-    fetch_data()
+    data = fetch_all_data()
+    for endpoint in ENDPOINTS:
+        print("-------" + endpoint + "----------")
+        print(data[endpoint])
