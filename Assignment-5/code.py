@@ -47,8 +47,8 @@ def setup_constraints(driver):
 #-------------------------- HELPER FUNCTION -----------------------------------
 # This is a helper function that makes handling color lists easier. It just
 # takes the string of colors(list seperated with comas), return an empty list
-# if it's empty, if not, it removes the spaces and split that string to an 
-# actual list.
+# if it's unknown or missing, if not, it removes the spaces and split that 
+# string to an actual list.
 #------------------------------------------------------------------------------
 def parse_colors(color_string):
     if color_string.lower() in ['n/a', 'unknown', 'none']:
