@@ -1,32 +1,74 @@
 from neo4j import GraphDatabase
 import requests
 
+
+#--------------------- INITIALIZE OUR VARIABLES ---------------------------------
+# we initialize the URI with the localhost and the port number for neo4j, the
+# AUTH with the login credentials, the BASE_URL is basically the API endpoint
+# that contains all the available API endpoints, we need just to concatenate it
+# with the specific one we want from the ENDPOINS list.
+#-------------------------------------------------------------------------------
 URI = "neo4j://127.0.0.1:7687"
 AUTH = ("neo4j", "amnqU4LveHgvhCQ6FYQu")
 BASE_URL = "https://swapi.info/api/"
 ENDPOINTS = ["films", "people", "planets", "species", "vehicles", "starships"]
+#-------------------------------------------------------------------------------
 
+
+#----------------------- GET ALL THE DATA --------------------------------------
+# we create an empty dictionary, and for each one of the endpoints that we have
+# we call the API and get the response, so we will get a dictionary with all the 
+# data from all the 6 API endpoints.
+#------------------------------------------------------------------------------
 def fetch_all_data():
-    """Fetches all JSON payloads from the 6 SWAPI endpoints."""
     db_data = {}
     for endpoint in ENDPOINTS:
         response = requests.get(f"{BASE_URL}{endpoint}")
         response.raise_for_status()
-        # swapi.info returns the full list directly, no pagination needed
         db_data[endpoint] = response.json() 
     return db_data
+#------------------------------------------------------------------------------
 
+
+#-------------------------- DEFINING CONSTRAINS -------------------------------
+# to ensure the 'idempotency' we created for each one of our nodes a field 'url'
+# that is unique and acts as an id for that node.
+#------------------------------------------------------------------------------
 def setup_constraints(driver):
-    """Ensures idempotency by making the 'url' property unique for all nodes."""
     labels = ["Film", "Person", "Planet", "Species", "Vehicle", "Starship"]
     for label in labels:
         driver.execute_query(
             f"CREATE CONSTRAINT IF NOT EXISTS FOR (n:{label}) REQUIRE n.url IS UNIQUE",
             database_="swapi"
         )
+#------------------------------------------------------------------------------
 
+
+#-------------------------- HELPER FUNCTION -----------------------------------
+# This is a helper function that makes handling color lists easier. It just
+# takes the string of colors(list seperated with comas), return an empty list
+# if it's empty, if not, it removes the spaces and split that string to an 
+# actual list.
+#------------------------------------------------------------------------------
+def parse_colors(color_string):
+    if color_string.lower() in ['n/a', 'unknown', 'none']:
+        return []
+    return [color.strip() for color in color_string.split(',')]
+#------------------------------------------------------------------------------
+
+
+#---------------------- LOADING THE NODES -------------------------------------
+# in this function, we loop for all the items in each one of the 6 API endpoints
+# that we have, we get the node and we use 'MERGE' to look if the node exists
+# already, if so it binds it to the specific variable and move to the 'SET' 
+# block to fill its properties, else it creates a new node with that specific 
+# 'url' then moves to the 'SET' section.
+# In the process of populating the properties, we made sure to convert the data
+# to its suitable data type (eg: date, int, float ...) to make querying the 
+# database with calculation possible. And we also handled the 'unknowns' and 'n/a'
+# to be populated by 'null' instead.
+#------------------------------------------------------------------------------
 def load_nodes(driver, db_data):
-    """PASS 1: Creates nodes, maps all scalar fields, and casts numerics safely."""
     
     # 1. Films
     for film in db_data['films']:
@@ -77,6 +119,10 @@ def load_nodes(driver, db_data):
 
     # 4. Species
     for species in db_data['species']:
+        species['skin_colors'] = parse_colors(species['skin_colors'])
+        species['hair_colors'] = parse_colors(species['hair_colors'])
+        species['eye_colors'] = parse_colors(species['eye_colors'])
+
         driver.execute_query("""
             MERGE (s:Species {url: $data.url})
             SET s.name = $data.name,
@@ -131,9 +177,19 @@ def load_nodes(driver, db_data):
                 s.hyperdrive_rating = toFloat(CASE WHEN $data.hyperdrive_rating IN ['unknown', 'n/a'] THEN null ELSE $data.hyperdrive_rating END),
                 s.MGLT = toInteger(CASE WHEN $data.MGLT IN ['unknown', 'n/a'] THEN null ELSE $data.MGLT END)
             """, data=starship, database_="swapi")
-        
+#------------------------------------------------------------------------------
+
+
+#----------------------- CREATING THE RELATIONSHIPS ---------------------------
+# in this function, we loop for the reference fields to make relationships with 
+# them. We didn't go through all the reference fields in all the API endpoints,
+# because unlike the REST API, the data in neo4j graph is unidirectional, so
+# there is no need to set the relationship twice. We only need to get our 10
+# relationships, we get the first 5 from the 'film' because it's connected to
+# all the nodes, then the other 4 from the 'people' node, and the last one from
+# the 'species' node.
+#------------------------------------------------------------------------------
 def load_relationships(driver, db_data):
-    """PASS 2: Connects nodes. Only one side of a bidirectional API relationship is parsed to avoid redundancy."""
     
     # 1. FILM REFERENCES -> Connect all entities to the films they appear in
     for film in db_data['films']:
@@ -163,7 +219,6 @@ def load_relationships(driver, db_data):
                 MERGE (v)-[:APPEARS_IN]->(f)
             """, f_url=film_url, v_url=vehicle_url, database_="swapi")
             
-        # FIXED: Added the missing Species -> Film relationship
         for species_url in film.get('species', []):
             driver.execute_query("""
                 MATCH (f:Film {url: $f_url}), (s:Species {url: $s_url})
@@ -171,7 +226,6 @@ def load_relationships(driver, db_data):
             """, f_url=film_url, s_url=species_url, database_="swapi")
 
     # 2. PERSON REFERENCES -> Connect Homeworlds, Species, and Piloting
-    # (We skip the 'films' array here because we already created the APPEARS_IN edge above)
     for person in db_data['people']:
         person_url = person['url']
         
@@ -207,19 +261,26 @@ def load_relationships(driver, db_data):
                 MATCH (s:Species {url: $s_url}), (pl:Planet {url: $pl_url})
                 MERGE (s)-[:COMES_FROM]->(pl)
             """, s_url=species['url'], pl_url=species['homeworld'], database_="swapi")
+#------------------------------------------------------------------------------
 
-if __name__ == "__main__":
-    with GraphDatabase.driver(URI, auth=AUTH) as driver:
-        print("1. Fetching all SWAPI data...")
-        swapi_data = fetch_all_data()
 
-        print("2. Setting up uniqueness constraints...")
-        setup_constraints(driver)
+#--------------------------- MAIN ---------------------------------------------
+# finally we execute all those functions. We start by initializing the driver
+# with the 'URI' and our credentials, and we call all the functions one after
+# the other alongside status message.
+#------------------------------------------------------------------------------
+with GraphDatabase.driver(URI, auth=AUTH) as driver:
+    print("1. Fetching all SWAPI data...")
+    swapi_data = fetch_all_data()
+
+    print("2. Setting up uniqueness constraints...")
+    setup_constraints(driver)
         
-        print("3. PASS 1: Creating nodes and casting numeric properties...")
-        load_nodes(driver, swapi_data)
+    print("3. PASS 1: Creating nodes and casting numeric properties...")
+    load_nodes(driver, swapi_data)
 
-        print("4. PASS 2: Mapping directed relationships...")
-        load_relationships(driver, swapi_data)
+    print("4. PASS 2: Mapping directed relationships...")
+    load_relationships(driver, swapi_data)
 
-        print("Import completely finished!")
+    print("Import completely finished!")
+#------------------------------------------------------------------------------
