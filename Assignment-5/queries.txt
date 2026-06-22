@@ -1,0 +1,47 @@
+#------------------------ TASK2(a) ----------------------------------------------
+In this query we match for the people that appears in a film, 
+we filter the ones that have a non null height, because we already 
+converted the ‘unknown’ height values to null in the import process. 
+After that, we pass the necessary variables to the next context and 
+we sort them by height descending. Then we group by film, put the sorted 
+characters into a list using "COLLECT" and get the top 3 tallest characters. 
+Finally, we expand the list again back to individual rows and return "film", 
+"character" and "height".
+#-------------------------------------------------------------------------------
+MATCH (p:Person)-[:APPEARS_IN]->(f:Film)
+WHERE p.height IS NOT NULL
+WITH f.title AS film, p.name AS character, p.height AS height
+ORDER BY height DESC
+WITH film, COLLECT({character: character, height: height})[0..3] AS tallest_characters
+UNWIND tallest_characters AS tallest_character
+RETURN film, tallest_character.character AS character, tallest_character.height AS height
+#-------------------------------------------------------------------------------
+
+
+#------------------------ TASK2(b) ----------------------------------------------
+This query is simple because we already stored the "skin\_color" as a list, 
+so managing it would be easy. We match all species nodes first, then we expand 
+the list of colors into individual rows. Finally, we return the color and the 
+number of species with that color. We don't need to use distinct here because 
+cypher automatically groups by the color.
+#-------------------------------------------------------------------------------
+MATCH (s:Species)
+UNWIND s.skin_colors AS colors
+RETURN colors AS skin_color, COUNT(s) AS species_count
+#-------------------------------------------------------------------------------
+
+
+#------------------------ TASK2(c) ----------------------------------------------
+In this query we take planets, their residents and the films those residents appear 
+in. Then, we group by the planet and the person to calculate how many films each 
+person appeared in. In the second "WITH" we take the planet, calculate the average 
+and rounding it to 3 decimals, without forgetting the conversion to float in order 
+to prevent integer division, and finally count the number of people. Finally, we return 
+the results ordered by the "averageFilms" then "planet" in a descending order.
+#-------------------------------------------------------------------------------
+MATCH (planet:Planet)<-[:COMES_FROM]-(person:Person)-[:APPEARS_IN]->(f:Film)
+WITH planet.name AS planet, person, COUNT(f) AS nmbr_films_per_person
+WITH planet, ROUND(toFloat(SUM(nmbr_films_per_person))/COUNT(person), 3) AS averageFilms, COUNT(person) AS residentsCounted
+RETURN planet, averageFilms, residentsCounted
+ORDER BY averageFilms DESC, planet ASC
+#-------------------------------------------------------------------------------
