@@ -27,3 +27,20 @@ print("Adjacency Matrix (A):")
 print(A)
 print("\nDegree Matrix (D):")
 print(D)
+
+#TASK1(c)
+L = D - A
+eigenvalues, eigenvectors = np.linalg.eigh(L)
+
+eigenvalues_clean = np.round(eigenvalues, 4)
+eigenvectors_clean = np.round(eigenvectors, 4)
+
+print("--- Task 1(c) Output ---")
+print("\nLaplacian Matrix (L):")
+print(L)
+
+print("\nEigenvalues (Sorted):")
+print(eigenvalues_clean)
+
+print("\nEigenvectors (Each column corresponds to the sorted eigenvalues):")
+print(eigenvectors_clean)
