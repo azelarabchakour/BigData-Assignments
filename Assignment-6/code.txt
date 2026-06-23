@@ -48,7 +48,6 @@ L = D - A
 eigenvalues, eigenvectors = np.linalg.eigh(L)
 eigenvalues_clean = np.round(eigenvalues, 4)
 eigenvectors_clean = np.round(eigenvectors, 4)
-print("--- Task 1(c) Output ---")
 print("\nLaplacian Matrix (L):")
 print(L)
 print("\nEigenvalues (Sorted):")
